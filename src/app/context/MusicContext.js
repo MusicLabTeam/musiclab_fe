@@ -1,3 +1,4 @@
+import NowPlaying from "../components/NowPlaying";
 import React, { createContext, useContext, useState } from "react";
 
 // src/app/context/MusicContext.js
@@ -7,7 +8,7 @@ export const MusicContext = createContext();
 export function MusicProvider({ children }) {
   const [selectedChart, setSelectedChart] = useState("YouTube Music");
   const [selectedRegion, setSelectedRegion] = useState("USA");
-
+  const [nowPlaying, setNowPlaying] = useState(null);
   return (
     <MusicContext.Provider
       value={{
@@ -15,6 +16,8 @@ export function MusicProvider({ children }) {
         setSelectedChart,
         selectedRegion,
         setSelectedRegion,
+        nowPlaying,
+        setNowPlaying,
       }}
     >
       {children}

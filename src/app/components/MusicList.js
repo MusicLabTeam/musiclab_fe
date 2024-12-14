@@ -1,5 +1,4 @@
 import Link from "next/link";
-import NowPlaying from "./NowPlaying";
 import React, { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { useMusic } from "../context/MusicContext";
@@ -11,13 +10,8 @@ import {
 } from "@/api/fetchChart";
 
 export default function MusicList() {
-  const [appleMusicKr, setAppleMusicKr] = useState([]);
-  const [youtubeKr, setYoutubeKr] = useState([]);
-  const [spotifyKr, setSpotifyKr] = useState([]);
-
-  const { selectedChart, selectedRegion } = useMusic();
+  const { selectedChart, selectedRegion, setNowPlaying } = useMusic();
   const [chartData, setChartData] = useState([]);
-  const [currentSong, setCurrentSong] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,19 +42,20 @@ export default function MusicList() {
 
     fetchData();
   }, [selectedChart, selectedRegion]);
+
+  // handleSongClick 함수 내부 정의
+  const handleSongClick = (song) => {
+    setNowPlaying(song); // useMusic에서 가져온 setNowPlaying 호출
+  };
+
   return (
-    <div className="flex">
-      <div className="flex-1">
-        <ChartTable data={chartData} onPlay={setCurrentSong} />
-      </div>
-      <div className="w-[12rem]">
-        <NowPlaying currentSong={currentSong} />
-      </div>
+    <div>
+      <ChartTable data={chartData} onSongClick={handleSongClick} />
     </div>
   );
 }
 
-function ChartTable({ data, onPlay }) {
+function ChartTable({ data, onSongClick }) {
   return (
     <div className="mb-8 ml-2 overflow-x-auto">
       <table className="w-full text-left border-collapse table-auto">
@@ -90,27 +85,22 @@ function ChartTable({ data, onPlay }) {
               </td>
               <td className="px-4 py-3 font-medium text-left">
                 <Link
-                  href={item.song_link || item.link}
+                  href={item.link || "song-link"}
                   className="hover:text-primary"
                 >
                   {item.title}
                 </Link>
               </td>
               <td className="px-4 py-3 pl-1 text-left">
-                <Link
-                  href={item.artist_link || "#"}
-                  className="hover:text-primary"
-                >
+                <Link href={item.artist_link} className="hover:text-primary">
                   {item.artist}
                 </Link>
               </td>
-              <td className="px-4 py-3 text-right">
-                {item.streams || item.views}
-              </td>
+              <td className="px-4 py-3 text-right">{item.streams}</td>
               <td className="px-4 py-3 text-center">
                 <button
                   className="hover:text-primary pl-1 text-[.75rem]"
-                  onClick={() => onPlay(item)}
+                  onClick={() => onSongClick(item)} // onSongClick 호출
                 >
                   <FaPlay />
                 </button>

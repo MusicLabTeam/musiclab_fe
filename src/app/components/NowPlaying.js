@@ -1,18 +1,20 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { IoIosPause, IoIosPlay } from "react-icons/io";
+import { useMusic } from "../context/MusicContext";
 
-export default function NowPlaying({ currentSong }) {
+export default function NowPlaying() {
+  const { nowPlaying } = useMusic();
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
 
   useEffect(() => {
-    if (currentSong) {
+    if (nowPlaying) {
       setIsPlaying(false);
       setVideoUrl(null);
       fetchYouTubeUrl();
     }
-  }, [currentSong]);
+  }, [nowPlaying]);
 
   useEffect(() => {
     if (videoUrl) {
@@ -35,7 +37,7 @@ export default function NowPlaying({ currentSong }) {
   const fetchYouTubeUrl = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/play-song/youtube/${currentSong.id}`
+        `http://localhost:8000/api/play-song/youtube/${nowPlaying.id}`
       );
       if (!response.ok) {
         console.error("API Error:", await response.text());
@@ -70,15 +72,15 @@ export default function NowPlaying({ currentSong }) {
     }
   };
 
-  if (!currentSong) return null;
+  if (!nowPlaying) return null;
 
   return (
     <div className="h-[18rem] w-[12rem] mb-[1rem]">
       <h2 className="text-[1.2rem] font-semibold mb-[1rem]">Now Playing...</h2>
       <div className="mb-[1rem] flex items-center justify-between">
         <div>
-          <h3 className="text-[.75rem] font-semibold">{currentSong.title}</h3>
-          <p className="text-[.75rem] font-light">{currentSong.artist}</p>
+          <h3 className="text-[.75rem] font-semibold">{nowPlaying.title}</h3>
+          <p className="text-[.75rem] font-light">{nowPlaying.artist}</p>
         </div>
         <div onClick={togglePlay} className="cursor-pointer">
           {isPlaying ? (
@@ -91,7 +93,7 @@ export default function NowPlaying({ currentSong }) {
       <div>
         <img
           src={
-            currentSong.thumbnail_link || "https://via.placeholder.com/300x300"
+            nowPlaying.thumbnail_link || "https://via.placeholder.com/300x300"
           }
           alt="What's Playing"
           className="w-[12rem] h-[12rem] background rounded-sm"
