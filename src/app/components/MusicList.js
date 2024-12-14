@@ -25,7 +25,6 @@ export default function MusicList() {
           data = await fetchSpotifyChart();
         }
 
-        // 지역 데이터를 추출하는 로직
         let regionData = [];
         if (selectedRegion === "JPN") {
           regionData = data[0];
@@ -45,7 +44,7 @@ export default function MusicList() {
 
   // handleSongClick 함수 내부 정의
   const handleSongClick = (song) => {
-    setNowPlaying(song); // useMusic에서 가져온 setNowPlaying 호출
+    setNowPlaying(song);
   };
 
   return (
@@ -85,7 +84,7 @@ function ChartTable({ data, onSongClick }) {
               </td>
               <td className="px-4 py-3 font-medium text-left">
                 <Link
-                  href={item.link || "song-link"}
+                  href={item.link || item.song_link}
                   className="hover:text-primary"
                 >
                   {item.title}
@@ -96,11 +95,13 @@ function ChartTable({ data, onSongClick }) {
                   {item.artist}
                 </Link>
               </td>
-              <td className="px-4 py-3 text-right">{item.streams}</td>
+              <td className="px-4 py-3 text-right">
+                {item.streams || item.views || "."}
+              </td>
               <td className="px-4 py-3 text-center">
                 <button
                   className="hover:text-primary pl-1 text-[.75rem]"
-                  onClick={() => onSongClick(item)} // onSongClick 호출
+                  onClick={() => onSongClick(item)}
                 >
                   <FaPlay />
                 </button>

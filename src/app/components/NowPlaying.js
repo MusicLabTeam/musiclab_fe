@@ -36,6 +36,8 @@ export default function NowPlaying() {
 
   const fetchYouTubeUrl = async () => {
     try {
+      if (!nowPlaying) return;
+
       const response = await fetch(
         `http://localhost:8000/api/play-song/youtube/${nowPlaying.id}`
       );
@@ -72,44 +74,66 @@ export default function NowPlaying() {
     }
   };
 
-  if (!nowPlaying) return null;
-
   return (
     <div className="h-[18rem] w-[12rem] mb-[1rem]">
       <h2 className="text-[1.2rem] font-semibold mb-[1rem]">Now Playing...</h2>
-      <div className="mb-[1rem] flex items-center justify-between">
-        <div>
-          <h3 className="text-[.75rem] font-semibold">{nowPlaying.title}</h3>
-          <p className="text-[.75rem] font-light">{nowPlaying.artist}</p>
-        </div>
-        <div onClick={togglePlay} className="cursor-pointer">
-          {isPlaying ? (
-            <IoIosPause className="text-[1.2rem]" />
-          ) : (
-            <IoIosPlay className="text-[1.2rem]" />
+      {nowPlaying ? (
+        <>
+          <div className="mb-[1rem] flex items-center justify-between">
+            <div>
+              <h3 className="text-[.75rem] font-semibold">
+                {nowPlaying.title}
+              </h3>
+              <p className="text-[.75rem] font-light">{nowPlaying.artist}</p>
+            </div>
+            <div onClick={togglePlay} className="cursor-pointer">
+              {isPlaying ? (
+                <IoIosPause className="text-[1.2rem]" />
+              ) : (
+                <IoIosPlay className="text-[1.2rem]" />
+              )}
+            </div>
+          </div>
+          <div>
+            <img
+              src={nowPlaying.thumbnail_link}
+              alt="Now Playing"
+              className="w-[12rem] h-[12rem] background rounded-sm"
+            />
+          </div>
+          {videoUrl && (
+            <div style={{ display: "none" }}>
+              <iframe
+                id="youtube-player"
+                width="0"
+                height="0"
+                src={`${videoUrl.replace("watch?v=", "embed/")}?enablejsapi=1`}
+                allow="autoplay; encrypted-media"
+              />
+            </div>
           )}
-        </div>
-      </div>
-      <div>
-        <img
-          src={
-            nowPlaying.thumbnail_link || "https://via.placeholder.com/300x300"
-          }
-          alt="What's Playing"
-          className="w-[12rem] h-[12rem] background rounded-sm"
-        />
-      </div>
-      {videoUrl && (
-        <div style={{ display: "none" }}>
-          <iframe
-            id="youtube-player"
-            width="0"
-            height="0"
-            src={`${videoUrl.replace("watch?v=", "embed/")}?enablejsapi=1`}
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-          />
-        </div>
+        </>
+      ) : (
+        <>
+          <div className="mb-[1rem] flex items-center justify-between">
+            <div>
+              <h3 className="text-[.75rem] font-semibold">
+                No song is currently playing.
+              </h3>
+              <p className="text-[.75rem] font-light">.</p>
+            </div>
+            <div onClick={togglePlay} className="cursor-pointer">
+              <IoIosPlay className="text-[1.2rem]" />
+            </div>
+          </div>
+          <div>
+            <img
+              src="https://via.placeholder.com/300x300"
+              alt="Placeholder"
+              className="w-[12rem] h-[12rem] background rounded-sm"
+            />
+          </div>
+        </>
       )}
     </div>
   );
