@@ -22,7 +22,7 @@ export default function RegionSelector() {
   const currentRegion = languages.find((lang) => lang.code === selectedRegion);
 
   return (
-    <div className="relative w-max">
+    <div className="relative w-max z-50">
       <div
         onClick={toggleDropdown}
         className="flex items-center justify-end button w-[5.5rem] h-[2.3rem] px-4 py-2 rounded-full cursor-pointer shadow-sm transition-all"

@@ -122,9 +122,7 @@ export default function NowPlaying() {
               </h3>
               <p className="text-[.75rem] font-light">.</p>
             </div>
-            <div onClick={togglePlay} className="cursor-pointer">
-              <IoIosPlay className="text-[1.2rem]" />
-            </div>
+            
           </div>
           <div>
             <img

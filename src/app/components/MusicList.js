@@ -1,5 +1,8 @@
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import RegionSelector from "./RegionSelector";
 import { FaPlay } from "react-icons/fa";
 import { useMusic } from "../context/MusicContext";
 
@@ -49,13 +52,11 @@ export default function MusicList() {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Music Chart</h2>
-        <input
-          type="date"
-          className="border border-gray-300 rounded px-2 py-1"
-          // value={selectedDate}
-          // onChange={(e) => setSelectedDate(e.target.value)}
-        />
+        <div className="flex items-center gap-4">
+         //
+          <RegionSelector />
+        </div>
+        <h2 className="text-xl mr-[1rem] font-semibold">{`${selectedChart} - ${selectedRegion} `}</h2>
       </div>
       <ChartTable data={chartData} onSongClick={handleSongClick} />
     </div>
@@ -66,8 +67,8 @@ function ChartTable({ data, onSongClick }) {
   return (
     <div className="mb-8 ml-2 overflow-x-auto">
       <table className="w-full text-left border-collapse table-auto">
-        <thead className="sticky top-0 z-10 bg-lightBackground dark:bg-darkBackground">
-          <tr className="border-b-[1px] border-lightText dark:border-darkText font-bold">
+        <thead className="sticky top-0 z-10 ">
+          <tr className="border-b-[.1rem] border-lightText/50 dark:border-darkText font-bold">
             <th className="w-[5%] px-4 py-3 text-center">#</th>
             <th className="w-[10%] px-4 py-3 text-center"></th>
             <th className="w-[40%] px-4 py-3 text-left">Title</th>
