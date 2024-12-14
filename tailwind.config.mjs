@@ -40,7 +40,7 @@ export default {
                 filter: "brightness(1.3)",
               },
               "&": {
-                filter: "brightness(0.9)",
+                filter: "brightness(0.95)",
               },
             },
             "&:active": {

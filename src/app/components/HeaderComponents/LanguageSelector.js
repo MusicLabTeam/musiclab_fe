@@ -26,7 +26,7 @@ export default function LanguageSelector() {
     <div className="relative w-max">
       <div
         onClick={toggleDropdown}
-        className="flex items-center justify-end button w-[5.5rem] h-[2.3rem] px-4 py-2 rounded-full cursor-pointer shadow-md transition-all"
+        className="flex items-center justify-end button w-[5.5rem] h-[2.3rem] px-4 py-2 rounded-full cursor-pointer shadow-sm transition-all"
       >
         <span className="font-medium text-[.75rem] ml-auto">
           {currentLanguage?.label}
@@ -47,7 +47,7 @@ export default function LanguageSelector() {
                 <li
                   key={lang.code}
                   onClick={() => handleLanguageChange(lang.code)}
-                  className="flex items-center gap-2 text-center justify-center w-[6rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
+                  className="flex shadow-sm items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
                 >
                   {lang.label}
                 </li>

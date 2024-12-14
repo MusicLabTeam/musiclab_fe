@@ -32,15 +32,15 @@ export default function Header() {
         <LanguageSelector />
         <button
           onClick={toggleTheme}
-          className="flex items-center justify-center h-[2.3rem] w-[2.3rem] button rounded-full cursor-pointer"
+          className="flex shadow-sm items-center justify-center h-[2.3rem] w-[2.3rem] button rounded-full cursor-pointer"
         >
           {theme === "light" ? (
-            <MdWbSunny className="text-[1.3rem]" />
+            <MdWbSunny className="text-[1.3rem] " />
           ) : (
             <MdDarkMode className="text-[1.3rem]" />
           )}
         </button>
-        <button className="flex items-center justify-center h-[2.3rem] w-[2.3rem] button rounded-full cursor-pointer">
+        <button className="flex shadow-sm items-center justify-center h-[2.3rem] w-[2.3rem] button rounded-full cursor-pointer">
           <MdAccountCircle className="text-[1.8rem]" />
         </button>
       </div>

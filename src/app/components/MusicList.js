@@ -42,13 +42,21 @@ export default function MusicList() {
     fetchData();
   }, [selectedChart, selectedRegion]);
 
-  // handleSongClick 함수 내부 정의
   const handleSongClick = (song) => {
     setNowPlaying(song);
   };
 
   return (
     <div>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Music Chart</h2>
+        <input
+          type="date"
+          className="border border-gray-300 rounded px-2 py-1"
+          // value={selectedDate}
+          // onChange={(e) => setSelectedDate(e.target.value)}
+        />
+      </div>
       <ChartTable data={chartData} onSongClick={handleSongClick} />
     </div>
   );
