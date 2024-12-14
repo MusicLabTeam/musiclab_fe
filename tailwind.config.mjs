@@ -25,5 +25,43 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addComponents }) {
+      addComponents(
+        {
+          ".button": {
+            "@apply bg-lightButton text-lightText cursor-pointer": {},
+
+            ".dark &": {
+              "@apply bg-darkButton text-darkText cursor-pointer": {},
+            },
+            "&:hover": {
+              ".dark &": {
+                filter: "brightness(1.3)",
+              },
+              "&": {
+                filter: "brightness(0.9)",
+              },
+            },
+            "&:active": {
+              "@apply bg-lightButton text-lightText": {},
+              ".dark &": {
+                "@apply bg-darkButton text-darkText": {},
+              },
+              filter: "none",
+            },
+          },
+        },
+        {
+          ".background": {
+            "@apply bg-lightBackground text-lightText": {},
+
+            ".dark &": {
+              "@apply bg-darkBackground text-darkText": {},
+            },
+          },
+        }
+      );
+    },
+  ],
 };
