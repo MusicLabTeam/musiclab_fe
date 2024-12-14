@@ -122,7 +122,6 @@ export default function NowPlaying() {
               </h3>
               <p className="text-[.75rem] font-light">.</p>
             </div>
-            
           </div>
           <div>
             <img

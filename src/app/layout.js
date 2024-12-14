@@ -35,7 +35,9 @@ export default function RootLayout({ children }) {
             <Header />
             <main className="flex flex-1 pt-[6rem] pl-[16rem] pb-[3rem]">
               <Sidebar />
-              <div className="flex-1 p-4 overflow-y-auto">{children}</div>
+              <div className="flex-1 px-[2.5rem] overflow-y-auto">
+                {children}
+              </div>
             </main>
             <footer className="fixed bottom-0 left-0 w-full h-[3rem] items-end bg-lightBackground pb-[0.5rem] dark:bg-darkBackground shadow-md flex justify-center  font-light text-[0.8rem] text-lightText dark:text-darkText gap-2 z-30">
               <span>© 2024 MusicLab. All Rights Reserved.</span>

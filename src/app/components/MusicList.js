@@ -3,7 +3,8 @@ import DatePicker from "react-datepicker";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import RegionSelector from "./RegionSelector";
-import { FaPlay } from "react-icons/fa";
+import SearchBar from "./HeaderComponents/SearchBar";
+import { FaPlay, FaSearch } from "react-icons/fa";
 import { useMusic } from "../context/MusicContext";
 
 import {
@@ -14,6 +15,7 @@ import {
 
 export default function MusicList() {
   const { selectedChart, selectedRegion, setNowPlaying } = useMusic();
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
@@ -51,12 +53,24 @@ export default function MusicList() {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-         //
+      <div className="flex mb-4 fixed z-50 h-[5rem] justify-between -translate-x-[1rem] w-full pt-[1rem] bg-gradient-to-b from-lightBackground dark:from-darkBackground via-lightBackground/50 dark:via-darkBackground/50 to-transparent">
+        <div className="flex">
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            className="button h-[1.8rem] font-medium text-[.75rem] w-[6rem] mr-[.5rem] rounded-full focus:outline-none text-center"
+            dateFormat="yyyy-MM-dd"
+            maxDate={new Date()}
+          />
           <RegionSelector />
         </div>
-        <h2 className="text-xl mr-[1rem] font-semibold">{`${selectedChart} - ${selectedRegion} `}</h2>
+        <div className="flex items-center justify-around button h-[1.8rem] w-[6rem] rounded-full cursor-pointer shadow-sm ">
+          <FaSearch className="text-[.75rem]" />
+          <input
+            className="bg-transparent border-none outline-none text-[.75rem]  ml-2"
+            placeholder="Search"
+          />
+        </div>
       </div>
       <ChartTable data={chartData} onSongClick={handleSongClick} />
     </div>
@@ -65,7 +79,7 @@ export default function MusicList() {
 
 function ChartTable({ data, onSongClick }) {
   return (
-    <div className="mb-8 ml-2 overflow-x-auto">
+    <div className="mb-8 ml-2 overflow-x-auto pt-[2.8rem]">
       <table className="w-full text-left border-collapse table-auto">
         <thead className="sticky top-0 z-10 ">
           <tr className="border-b-[.1rem] border-lightText/50 dark:border-darkText font-bold">

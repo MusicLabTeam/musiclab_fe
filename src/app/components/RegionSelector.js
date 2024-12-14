@@ -22,10 +22,10 @@ export default function RegionSelector() {
   const currentRegion = languages.find((lang) => lang.code === selectedRegion);
 
   return (
-    <div className="relative w-max z-50">
+    <div className="relative w-max z-40">
       <div
         onClick={toggleDropdown}
-        className="flex items-center justify-end button w-[5.5rem] h-[2.3rem] px-4 py-2 rounded-full cursor-pointer shadow-sm transition-all"
+        className="flex items-center justify-end button w-[5.5rem] h-[1.8rem] px-4 py-2 rounded-full cursor-pointer shadow-sm transition-all"
       >
         <span className="font-medium text-[.75rem] ml-auto">
           {currentRegion?.label}
@@ -38,7 +38,7 @@ export default function RegionSelector() {
       </div>
 
       {isOpen && (
-        <div className="absolute top-[2.5rem] left-0  rounded-lg ">
+        <div className="absolute top-[2rem] left-0 rounded-lg ">
           <ul className="flex flex-col space-y-[.2rem] justify-center">
             {languages
               .filter((reg) => reg.code !== selectedRegion)
@@ -46,7 +46,7 @@ export default function RegionSelector() {
                 <li
                   key={reg.code}
                   onClick={() => handleRegionChange(reg.code)}
-                  className="flex shadow-sm  items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
+                  className="flex shadow-sm  items-center gap-2 text-center justify-center  font-medium text-[.75rem]  w-[5.5rem]  h-[1.8rem] px-4 py-2 rounded-full button cursor-pointer"
                 >
                   {reg.label}
                 </li>
