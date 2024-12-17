@@ -2,8 +2,8 @@ import axios from "axios";
 
 const regionMap = {
   KOR: "kr",
-  JPN: "jp",
-  USA: "us",
+  JP: "jp",
+  US: "us",
 };
 
 const chartTypeMap = {
@@ -12,10 +12,10 @@ const chartTypeMap = {
   Spotify: "spotify",
 };
 
-export async function fetchChartByType(chartType, region, date) {
+export async function fetchChartByType(chart, region, date) {
   try {
     const mappedRegion = regionMap[region] || region;
-    const mappedChartKey = chartTypeMap[chartType];
+    const mappedChartKey = chartTypeMap[chart];
 
     if (!mappedChartKey) {
       throw new Error("Invalid chart type");
@@ -29,5 +29,19 @@ export async function fetchChartByType(chartType, region, date) {
   } catch (error) {
     console.error("Error fetching chart data:", error);
     return [];
+  }
+}
+
+export async function fetchSearchChart(query, region) {
+  try {
+    const mappedRegion = regionMap[region] || region;
+    const baseUrl = "http://localhost:8000/api/search";
+    const response = await axios.get(baseUrl, {
+      params: { q: query, country: mappedRegion },
+    });
+    return response.data || { youtube: [], spotify: [], apple_music: [] };
+  } catch (error) {
+    console.error("Error fetching search chart data:", error);
+    return { youtube: [], spotify: [], apple_music: [] };
   }
 }

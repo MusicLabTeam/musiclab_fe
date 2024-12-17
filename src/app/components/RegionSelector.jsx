@@ -7,9 +7,9 @@ export default function RegionSelector() {
   const { selectedRegion, setSelectedRegion } = useMusic();
 
   const languages = [
-    { code: "USA", label: "USA" },
+    { code: "US", label: "USA" },
     { code: "KOR", label: "Korea" },
-    { code: "JPN", label: "Japan" },
+    { code: "JP", label: "Japan" },
   ];
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
