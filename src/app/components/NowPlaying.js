@@ -126,7 +126,7 @@ export default function NowPlaying() {
           </div>
           <div>
             <div className="w-[12rem] h-[12rem] flex justify-center items-center bg-lightButton dark:bg-darkButton rounded-sm">
-              <RiTestTubeFill className="text-[3rem] dark:text-primary text-secondary" />
+              <RiTestTubeFill className="text-[3rem] " />
             </div>
           </div>
         </>

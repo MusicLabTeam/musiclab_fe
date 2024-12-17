@@ -9,7 +9,7 @@ export default function Sidebar() {
         <div className="flex-grow">
           <Library className="flex-grow" />
         </div>
-        <div>
+        <div className="flex justify-center">
           <NowPlaying />
         </div>
       </div>
