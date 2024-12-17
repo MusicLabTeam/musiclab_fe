@@ -1,30 +1,33 @@
 import axios from "axios";
 
-async function fetchChartData(url) {
+const regionMap = {
+  KOR: "kr",
+  JPN: "jp",
+  USA: "us",
+};
+
+const chartTypeMap = {
+  "YouTube Music": "youtube",
+  "Apple Music": "apple_music",
+  Spotify: "spotify",
+};
+
+export async function fetchChartByType(chartType, region, date) {
   try {
-    const response = await axios.get(url);
-    const data = response.data;
+    const mappedRegion = regionMap[region] || region;
+    const mappedChartKey = chartTypeMap[chartType];
 
-    const divided = [
-      data.slice(0, 100),
-      data.slice(100, 200),
-      data.slice(200, 300),
-    ];
-    return divided;
+    if (!mappedChartKey) {
+      throw new Error("Invalid chart type");
+    }
+
+    const baseUrl = `http://localhost:8000/api/music-charts/${mappedRegion}/${date}`;
+    const response = await axios.get(baseUrl);
+    // console.log(response.data);
+
+    return response.data[mappedChartKey] || [];
   } catch (error) {
-    console.error(`Error fetching data from ${url}:`, error);
-    throw error;
+    console.error("Error fetching chart data:", error);
+    return [];
   }
-}
-
-export async function fetchAppleMusicChart() {
-  return await fetchChartData("http://localhost:8000/api/apple-music");
-}
-
-export async function fetchYoutubeChart() {
-  return await fetchChartData("http://localhost:8000/api/youtube");
-}
-
-export async function fetchSpotifyChart() {
-  return await fetchChartData("http://localhost:8000/api/spotify");
 }

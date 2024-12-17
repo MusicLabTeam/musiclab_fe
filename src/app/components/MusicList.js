@@ -3,15 +3,10 @@ import DatePicker from "react-datepicker";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import RegionSelector from "./RegionSelector";
-import SearchBar from "./HeaderComponents/SearchBar";
-import { FaPlay, FaSearch } from "react-icons/fa";
+import SearchBar from "./SearchBar";
+import { FaPlay } from "react-icons/fa";
 import { useMusic } from "../context/MusicContext";
-
-import {
-  fetchAppleMusicChart,
-  fetchYoutubeChart,
-  fetchSpotifyChart,
-} from "@/api/fetchChart";
+import { fetchChartByType } from "@/api/fetchChart";
 
 export default function MusicList() {
   const { selectedChart, selectedRegion, setNowPlaying } = useMusic();
@@ -20,32 +15,21 @@ export default function MusicList() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const formattedDate = selectedDate.toISOString().split("T")[0];
       try {
-        let data = [];
-        if (selectedChart === "YouTube Music") {
-          data = await fetchYoutubeChart();
-        } else if (selectedChart === "Apple Music") {
-          data = await fetchAppleMusicChart();
-        } else if (selectedChart === "Spotify") {
-          data = await fetchSpotifyChart();
-        }
-
-        let regionData = [];
-        if (selectedRegion === "JPN") {
-          regionData = data[0];
-        } else if (selectedRegion === "KOR") {
-          regionData = data[1];
-        } else if (selectedRegion === "USA") {
-          regionData = data[2];
-        }
-        setChartData(regionData);
+        const data = await fetchChartByType(
+          selectedChart,
+          selectedRegion,
+          formattedDate
+        );
+        setChartData(data);
       } catch (error) {
         console.error("Error fetching chart data:", error);
       }
     };
 
     fetchData();
-  }, [selectedChart, selectedRegion]);
+  }, [selectedChart, selectedRegion, selectedDate]);
 
   const handleSongClick = (song) => {
     setNowPlaying(song);
@@ -53,23 +37,19 @@ export default function MusicList() {
 
   return (
     <div>
-      <div className="flex mb-4 fixed z-50 h-[5rem] justify-between -translate-x-[1rem] w-full pt-[1rem] bg-gradient-to-b from-lightBackground dark:from-darkBackground via-lightBackground/50 dark:via-darkBackground/50 to-transparent">
-        <div className="flex">
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            className="button h-[1.8rem] font-medium text-[.75rem] w-[6rem] mr-[.5rem] rounded-full focus:outline-none text-center"
-            dateFormat="yyyy-MM-dd"
-            maxDate={new Date()}
-          />
-          <RegionSelector />
-        </div>
-        <div className="flex items-center justify-around button h-[1.8rem] w-[6rem] rounded-full cursor-pointer shadow-sm ">
-          <FaSearch className="text-[.75rem]" />
-          <input
-            className="bg-transparent border-none outline-none text-[.75rem]  ml-2"
-            placeholder="Search"
-          />
+      <div className="flex mb-4 fixed z-50 h-[5rem] justify-between w-full pt-[1rem] bg-gradient-to-b from-lightBackground dark:from-darkBackground to-transparent">
+        <div className="flex justify-center">
+          <div className="flex">
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              className="button h-[1.8rem] font-medium text-[.75rem] w-[6rem] mr-[.5rem] rounded-full focus:outline-none text-center"
+              dateFormat="yyyy-MM-dd"
+              maxDate={new Date()}
+            />
+            <RegionSelector />
+          </div>
+          {/* <SearchBar /> */}
         </div>
       </div>
       <ChartTable data={chartData} onSongClick={handleSongClick} />

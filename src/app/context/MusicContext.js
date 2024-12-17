@@ -7,7 +7,7 @@ export const MusicContext = createContext();
 
 export function MusicProvider({ children }) {
   const [selectedChart, setSelectedChart] = useState("YouTube Music");
-  const [selectedRegion, setSelectedRegion] = useState("USA");
+  const [selectedRegion, setSelectedRegion] = useState("KOR");
   const [nowPlaying, setNowPlaying] = useState(null);
   return (
     <MusicContext.Provider
