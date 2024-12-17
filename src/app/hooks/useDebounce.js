@@ -5,7 +5,7 @@ export function useDebounce(value, delay) {
 
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedValue(value), delay);
-    return () => clearTimeout(handler); // Cleanup 타이머
+    return () => clearTimeout(handler);
   }, [value, delay]);
 
   return debouncedValue;
