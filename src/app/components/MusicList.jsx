@@ -1,3 +1,4 @@
+"use client";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import Link from "next/link";

@@ -2,6 +2,7 @@
 import "./globals.css";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
+import { Metadata } from "next";
 import { createContext, useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { MusicProvider } from "./context/MusicContext";
