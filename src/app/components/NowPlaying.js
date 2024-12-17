@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { IoIosPause, IoIosPlay } from "react-icons/io";
+import { RiTestTubeFill } from "react-icons/ri";
 import { useMusic } from "../context/MusicContext";
 
 export default function NowPlaying() {
@@ -124,11 +125,9 @@ export default function NowPlaying() {
             </div>
           </div>
           <div>
-            <img
-              src="https://via.placeholder.com/300x300"
-              alt="Placeholder"
-              className="w-[12rem] h-[12rem] background rounded-sm"
-            />
+            <div className="w-[12rem] h-[12rem] flex justify-center items-center bg-lightButton dark:bg-darkButton rounded-sm">
+              <RiTestTubeFill className="text-[3rem] dark:text-primary text-secondary" />
+            </div>
           </div>
         </>
       )}
