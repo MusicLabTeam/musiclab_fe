@@ -37,8 +37,8 @@ export default function MusicList() {
 
   return (
     <div>
-      <div className="flex mb-4 fixed z-50 h-[5rem] justify-between w-full pt-[1rem] bg-gradient-to-b from-lightBackground dark:from-darkBackground to-transparent">
-        <div className="flex justify-center">
+      <div className="flex mb-4 fixed z-50 h-[5rem] w-[calc(100vw-21rem)] pt-[1.3rem] bg-gradient-to-b from-lightBackground dark:from-darkBackground to-transparent">
+        <div className="flex w-full justify-between">
           <div className="flex">
             <DatePicker
               selected={selectedDate}
@@ -49,7 +49,7 @@ export default function MusicList() {
             />
             <RegionSelector />
           </div>
-          {/* <SearchBar /> */}
+          <SearchBar className="-translate-x-[2rem]" />
         </div>
       </div>
       <ChartTable data={chartData} onSongClick={handleSongClick} />
@@ -59,7 +59,7 @@ export default function MusicList() {
 
 function ChartTable({ data, onSongClick }) {
   return (
-    <div className="mb-8 ml-2 overflow-x-auto pt-[2.8rem]">
+    <div className="mb-8 ml-2 overflow-x-auto pt-[3.3rem]">
       <table className="w-full text-left border-collapse table-auto">
         <thead className="sticky top-0 z-10 ">
           <tr className="border-b-[.1rem] border-lightText/50 dark:border-darkText font-bold">
