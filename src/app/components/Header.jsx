@@ -1,6 +1,7 @@
 "use client";
 import Chart from "./HeaderComponents/MusicSelector";
 import LanguageSelector from "./HeaderComponents/LanguageSelector";
+import Link from "next/link";
 import LoginModal from "./Login";
 import { useContext, useState } from "react";
 import { MdAccountCircle, MdDarkMode, MdWbSunny } from "react-icons/md";
@@ -13,23 +14,31 @@ export default function Header() {
   const openLoginModal = () => setLoginModalOpen(true);
   const closeLoginModal = () => setLoginModalOpen(false);
 
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-[90] flex shadow-sm shadow-lightButton dark:shadow-darkButton justify-between items-center px-[1rem] bg-lightBackground dark:bg-darkBackground h-[6rem]">
         <div className="absolute inset-x-0 bottom-0 h-[2rem] bg-gradient-to-b from-transparent to-lightBackground dark:to-darkBackground"></div>
+
         {theme === "dark" ? (
           <img
-            className="ml-[1rem] h-[2rem]"
+            onClick={handleReload}
+            className="ml-[1rem] h-[2rem] cursor-pointer"
             src="dark_logo.png"
             alt="MusicLab"
           />
         ) : (
           <img
-            className="ml-[1rem] h-[2rem]"
+            onClick={handleReload}
+            className="ml-[1rem] h-[2rem] cursor-pointer"
             src="light_logo.png"
             alt="MusicLab"
           />
         )}
+
         <div className="flex space-x-[.5rem] items-start">
           <Chart />
           <LanguageSelector />
