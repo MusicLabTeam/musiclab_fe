@@ -2,6 +2,7 @@
 import Chart from "./HeaderComponents/MusicSelector";
 import LanguageSelector from "./HeaderComponents/LanguageSelector";
 import LoginModal from "./Login";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { MdAccountCircle, MdDarkMode, MdWbSunny } from "react-icons/md";
 import { ThemeContext } from "../layout";
@@ -10,12 +11,20 @@ export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
 
   const openLoginModal = () => setLoginModalOpen(true);
   const closeLoginModal = () => setLoginModalOpen(false);
 
-  const handleReload = () => {
-    window.location.reload();
+  const handleReload = () => window.location.reload();
+
+  const handleLogout = () => {
+    localStorage.removeItem("profile_image");
+    localStorage.removeItem("access_token");
+    setProfileImage(null);
+    setDropdownOpen(false);
+    alert("로그아웃 되었습니다.");
   };
 
   useEffect(() => {
@@ -47,7 +56,7 @@ export default function Header() {
           />
         )}
 
-        <div className="flex space-x-[.5rem] items-start">
+        <div className="flex space-x-[.5rem] items-start relative">
           <Chart />
           <LanguageSelector />
 
@@ -65,11 +74,34 @@ export default function Header() {
 
           {/* 프로필 */}
           {profileImage ? (
-            <img
-              src={profileImage}
-              alt="Profile"
-              className="h-[2.3rem] w-[2.3rem] rounded-full shadow-sm object-cover cursor-pointer"
-            />
+            <div className="relative">
+              <img
+                src={profileImage}
+                alt="Profile"
+                className="h-[2.3rem] w-[2.3rem] rounded-full shadow-sm object-cover cursor-pointer"
+                onClick={() => setDropdownOpen((prev) => !prev)}
+              />
+              {/* 드롭다운 메뉴 */}
+              {isDropdownOpen && (
+                <div className="absolute right-0 top-[2.8rem] space-y-[.4rem] shadow-lg rounded-md">
+                  <button
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      router.push("/profile");
+                    }}
+                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
+                  >
+                    Profile
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button !text-red-500 cursor-pointer"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <button
               onClick={openLoginModal}

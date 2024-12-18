@@ -22,7 +22,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
         if (response.status === 200) {
           const accessToken = response.data.access_token;
           localStorage.setItem("access_token", accessToken);
-
+          onClose();
           const userResponse = await axios.get(
             "http://localhost:8000/api/auth/me",
             {
@@ -31,14 +31,18 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
           );
 
           if (userResponse.status === 200) {
-            const profileImage = userResponse.data.profile_image;
+            localStorage.setItem(
+              "profile_image",
+              userResponse.data.profile_image
+            );
+            localStorage.setItem("email", userResponse.data.email);
+            localStorage.setItem("name", userResponse.data.name);
+            localStorage.setItem("name", userResponse.data.name);
 
-            localStorage.setItem("profile_image", profileImage);
-            onLoginSuccess(profileImage);
+            onLoginSuccess(userResponse.data.profile_image);
           }
 
-          alert("로그인 성공!");
-          onClose();
+          // alert("로그인 성공!");
         }
       } catch (error) {
         console.error(
