@@ -1,11 +1,42 @@
-import { FaGoogle } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+import axios from "axios";
+import { useGoogleLogin } from "@react-oauth/google";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
 export default function LoginModal({ onClose }) {
+  const googleLogin = useGoogleLogin({
+    flow: "auth-code", // 리디렉션 방식 활성화
+    clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID, // 환경 변수에서 클라이언트 ID 불러오기
+    onSuccess: async (codeResponse) => {
+      try {
+        console.log("Google OAuth Response:", codeResponse);
+
+        const response = await axios.post(
+          "http://localhost:8000/api/auth/google",
+          {
+            token: codeResponse.code, // 리디렉션 방식으로 받은 인증 코드 전송
+          }
+        );
+
+        if (response.status === 200) {
+          localStorage.setItem("access_token", response.data.access_token);
+          alert("로그인 성공!");
+          onClose();
+        }
+      } catch (error) {
+        console.error("Google Login Error:", error.message);
+        alert("로그인에 실패했습니다.");
+      }
+    },
+    onError: (error) => {
+      console.error("Google OAuth Error:", error);
+      alert("Google 인증에 실패했습니다.");
+    },
+  });
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
-      <div className="relative w-[25rem] flex flex-col items-center h-[20rem] p-[4rem] bg-lightBackground/70  dark:bg-darkBackground/90 rounded-xl shadow-lg">
+      <div className="relative w-[25rem] flex flex-col items-center h-[20rem] p-[4rem] bg-lightBackground/70 dark:bg-darkBackground/90 rounded-xl shadow-lg">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-2xl hover:text-primary"
@@ -16,17 +47,19 @@ export default function LoginModal({ onClose }) {
         <div className="flex justify-center w-full mb-[1rem]">
           <img className="w-[10rem]" src="dark_logo.png" alt="MusicLab" />
         </div>
-        {/* <h2 className=" mt-[.5rem] text-center">Sign in</h2> */}
+
         <div className="space-y-[1rem] w-full mt-[3rem]">
           <button
-            type="submit"
+            type="button"
+            onClick={() => googleLogin()}
             className="w-full py-[0.5rem] flex items-center justify-center gap-[0.5rem] bg-primary text-white rounded-md hover:bg-blue-600"
           >
             <FaGoogle className="text-[1.2rem]" />
             <span className="font-medium">Sign in with Google</span>
           </button>
+
           <button
-            type="submit"
+            type="button"
             className="w-full py-[0.5rem] flex items-center justify-center gap-[0.5rem] bg-gray-800 text-white rounded-md hover:bg-gray-900"
           >
             <FaGithub className="text-[1.2rem]" />
