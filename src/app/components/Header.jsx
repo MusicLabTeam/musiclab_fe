@@ -20,10 +20,12 @@ export default function Header() {
   const handleReload = () => window.location.reload();
 
   const handleLogout = () => {
+    router.push("/");
     localStorage.removeItem("profile_image");
     localStorage.removeItem("access_token");
     setProfileImage(null);
     setDropdownOpen(false);
+    window.location.reload();
     alert("로그아웃 되었습니다.");
   };
 

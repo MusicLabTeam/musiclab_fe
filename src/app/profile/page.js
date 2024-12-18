@@ -38,12 +38,12 @@ export default function ProfilePage() {
         <div className="flex flex-col items-center justify-center">
           <button
             onClick={() => {
+              router.push("/");
+              window.location.reload();
               localStorage.removeItem("access_token");
               localStorage.removeItem("email");
               localStorage.removeItem("name");
               localStorage.removeItem("profile_image");
-              router.push("/");
-              window.location.reload();
             }}
             className="mt-[2.5rem] bg-red-500 hover:bg-red-600 text-white py-[.5rem] px-[1.5rem] rounded-md"
           >
