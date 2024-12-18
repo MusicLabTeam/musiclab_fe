@@ -9,7 +9,7 @@ import { ThemeContext } from "../layout";
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
-  const [profileImage, setProfileImage] = useState(null); // 프로필 이미지 상태
+  const [profileImage, setProfileImage] = useState(null);
 
   const openLoginModal = () => setLoginModalOpen(true);
   const closeLoginModal = () => setLoginModalOpen(false);
@@ -18,13 +18,12 @@ export default function Header() {
     window.location.reload();
   };
 
-  // 로컬 저장소에서 프로필 이미지 가져오기
   useEffect(() => {
     const storedProfileImage = localStorage.getItem("profile_image");
     if (storedProfileImage) {
       setProfileImage(storedProfileImage);
     }
-  }, [profileImage]);
+  }, []);
 
   return (
     <>
@@ -48,12 +47,11 @@ export default function Header() {
           />
         )}
 
-        {/* 오른쪽 UI */}
         <div className="flex space-x-[.5rem] items-start">
           <Chart />
           <LanguageSelector />
 
-          {/* 테마 토글 버튼 */}
+          {/* 테마 토글 */}
           <button
             onClick={toggleTheme}
             className="flex shadow-sm items-center justify-center h-[2.3rem] w-[2.3rem] button rounded-full cursor-pointer"
@@ -65,7 +63,7 @@ export default function Header() {
             )}
           </button>
 
-          {/* 프로필 사진 또는 로그인 버튼 */}
+          {/* 프로필 */}
           {profileImage ? (
             <img
               src={profileImage}
@@ -83,8 +81,13 @@ export default function Header() {
         </div>
       </header>
 
-      {/* 로그인 모달 */}
-      {isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
+      {/* 로그인 */}
+      {isLoginModalOpen && (
+        <LoginModal
+          onClose={closeLoginModal}
+          onLoginSuccess={setProfileImage}
+        />
+      )}
     </>
   );
 }

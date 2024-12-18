@@ -3,24 +3,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
-async function getUserInfo(accessToken) {
-  try {
-    const response = await axios.get("http://localhost:8000/api/auth/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error fetching user info:",
-      error.response?.data || error.message
-    );
-    throw new Error("사용자 정보를 가져오는데 실패했습니다.");
-  }
-}
-
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose, onLoginSuccess }) {
   const googleLogin = useGoogleLogin({
     flow: "auth-code",
     ux_mode: "popup",
@@ -40,15 +23,19 @@ export default function LoginModal({ onClose }) {
           const accessToken = response.data.access_token;
           localStorage.setItem("access_token", accessToken);
 
-          const userData = await getUserInfo(accessToken);
-          console.log("User Info:", userData);
+          const userResponse = await axios.get(
+            "http://localhost:8000/api/auth/me",
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          );
 
-          localStorage.setItem("user_email", userData.email);
-          localStorage.setItem("user_name", userData.name);
-          localStorage.setItem("profile_image", userData.profile_image);
-          localStorage.setItem("user_id", userData.id);
-          localStorage.setItem("created_at", userData.created_at);
-          localStorage.setItem("is_active", userData.is_active);
+          if (userResponse.status === 200) {
+            const profileImage = userResponse.data.profile_image;
+
+            localStorage.setItem("profile_image", profileImage);
+            onLoginSuccess(profileImage);
+          }
 
           alert("로그인 성공!");
           onClose();
