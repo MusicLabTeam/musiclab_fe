@@ -10,8 +10,6 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
     redirect_uri: "http://localhost:3000",
     onSuccess: async (codeResponse) => {
       try {
-        console.log("Google Code Response:", codeResponse);
-
         const response = await axios.post(
           "http://localhost:8000/api/auth/google",
           {
@@ -22,7 +20,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
         if (response.status === 200) {
           const accessToken = response.data.access_token;
           localStorage.setItem("access_token", accessToken);
-          onClose();
+
           const userResponse = await axios.get(
             "http://localhost:8000/api/auth/me",
             {
@@ -31,18 +29,16 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
           );
 
           if (userResponse.status === 200) {
-            localStorage.setItem(
-              "profile_image",
-              userResponse.data.profile_image
-            );
-            localStorage.setItem("email", userResponse.data.email);
-            localStorage.setItem("name", userResponse.data.name);
-            localStorage.setItem("name", userResponse.data.name);
+            const { profile_image, name, email } = userResponse.data;
+            const user = { profileImage: profile_image, name, email };
 
-            onLoginSuccess(userResponse.data.profile_image);
+            localStorage.setItem("profile_image", profile_image);
+            localStorage.setItem("name", name);
+            localStorage.setItem("email", email);
+            onLoginSuccess(user);
           }
 
-          // alert("로그인 성공!");
+          onClose();
         }
       } catch (error) {
         console.error(
@@ -75,7 +71,9 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
         <div className="space-y-[1rem] w-full mt-[3rem]">
           <button
             type="button"
-            onClick={() => googleLogin()}
+            onClick={() => {
+              googleLogin(), onClose();
+            }}
             className="w-full py-[0.5rem] flex items-center justify-center gap-[0.5rem] bg-primary text-white rounded-md hover:bg-blue-600"
           >
             <FaGoogle className="text-[1.2rem]" />
