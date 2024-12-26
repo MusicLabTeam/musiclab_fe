@@ -2,6 +2,8 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaPlay, FaTrash } from "react-icons/fa";
+import { FaApple, FaSpotify } from "react-icons/fa";
+import { SiYoutubemusic } from "react-icons/si";
 import { fetchList } from "@/api/fetchList";
 import { deleteFavoriteSong } from "@/api/fetchList";
 
@@ -33,9 +35,9 @@ export default function ListPage() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold my-6 ml-[.5rem] flex items-center">
+      <h2 className="text-lg font-bold mt-6 ml-[.5rem] flex items-center">
         Liked Music
-      </h1>
+      </h2>
       <div>
         <ChartTable data={listData} onDelete={handleDelete} />
       </div>
@@ -49,8 +51,29 @@ function ChartTable({ data, onDelete }) {
   // };
 
   if (!data || data.length === 0) {
-    return <p className="text-gray-500">No songs</p>;
+    return (
+      <p className="text-gray-500 text-[1.1rem] w-full justify-center flex">
+        No songs
+      </p>
+    );
   }
+  const renderLogo = (songType) => {
+    switch (songType) {
+      case "youtube":
+        console.log("youtube");
+        return (
+          <SiYoutubemusic className="text-red-600 text-[1rem] rounded-full" />
+        );
+      case "spotify":
+        return <FaSpotify className="text-green-500 text-[1rem] " />;
+      case "apple":
+        return (
+          <FaApple className="text-[1rem] text-lightText dark:text-darkText" />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="mb-8 ml-2 overflow-x-auto">
@@ -77,12 +100,17 @@ function ChartTable({ data, onDelete }) {
                   className="object-cover w-10 h-10 rounded"
                 />
               </td>
-              <td className="px-4 py-3 font-medium text-left">
+              <td className="px-4 py-3 text-left  ">
                 <Link
                   href={item.link || item.song_link}
                   className="hover:text-primary"
                 >
-                  {item.title}
+                  <div className="flex items-center space-x-[.5rem]">
+                    <span className="flex items-center">
+                      {renderLogo(item.song_type)}
+                    </span>
+                    <span className="text-base">{item.title}</span>
+                  </div>
                 </Link>
               </td>
               {/* 아티스트링크없음 */}
