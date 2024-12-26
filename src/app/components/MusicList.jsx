@@ -4,8 +4,9 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import RegionSelector from "./RegionSelector";
 import SearchBar from "./SearchBar";
-import { FaApple, FaHeart, FaPlay, FaSpotify } from "react-icons/fa";
+import { FaApple, FaPlay, FaSpotify } from "react-icons/fa";
 import { SiYoutubemusic } from "react-icons/si";
+import { TbPlaylistAdd } from "react-icons/tb";
 import { useMusic } from "../context/MusicContext";
 import { fetchChartByType, fetchSearchChart } from "@/api/fetchChart";
 import { addFavoriteSong } from "@/api/fetchList";
@@ -140,7 +141,7 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
             <th className="w-[40%] px-4 py-3 text-left">Title</th>
             <th className="w-[25%] px-4 py-3 text-left pl-1">Artist</th>
             <th className="w-[15%] px-4 py-3 text-right">Streams</th>
-            <th className="w-[5%] px-4 py-3 text-center"></th>
+            <th className="w-[7%] px-4 py-3 text-center"></th>
           </tr>
         </thead>
         <tbody className="font-normal text-lightText/80 dark:text-darkText/80">
@@ -183,12 +184,12 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
                   <FaPlay />
                 </button>
               </td>
-              <td className="px-4 py-3 text-center">
+              <td className="px-3 py-3 text-center">
                 <button
-                  className="hover:text-primary pl-1 text-[.75rem]"
+                  className="hover:text-primary pl-1 text-[1.4rem]"
                   onClick={() => onFavoriteClick(item)}
                 >
-                  <FaHeart />
+                  <TbPlaylistAdd />
                 </button>
               </td>
             </tr>
