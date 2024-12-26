@@ -1,13 +1,36 @@
-export async function fetchList(query, region) {
+import axios from "axios";
+
+export async function fetchList() {
   try {
-    const mappedRegion = regionMap[region] || region;
-    const baseUrl = "http://localhost:8000/api/search";
-    const response = await axios.get(baseUrl, {
-      params: { q: query, country: mappedRegion },
+    const accessToken = localStorage.getItem("access_token");
+    const response = await axios.get("http://localhost:8000/api/mylist", {
+      headers: { Authorization: `Bearer ${accessToken}` },
     });
-    return response.data || { youtube: [], spotify: [], apple_music: [] };
+    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.error("Error fetching search chart data:", error);
+    console.error("Error fetching list data:", error);
     return { youtube: [], spotify: [], apple_music: [] };
+  }
+}
+
+export async function addFavoriteSong(songType, songId) {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    const response = await axios.post(
+      "http://localhost:8000/api/favorites",
+      {
+        song_type: songType,
+        song_id: songId,
+      },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+    console.log("Favorite song added:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding favorite song:", error);
+    throw error;
   }
 }

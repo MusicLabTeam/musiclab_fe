@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: process.env.NEXT_BACKEND_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-  withCredentials: true,
-});
+// const instance = axios.create({
+//   baseURL: process.env.NEXT_BACKEND_BASE_URL,
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   withCredentials: true,
+// });
 
 export async function fetchData() {
   try {

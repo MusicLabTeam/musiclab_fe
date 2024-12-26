@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+"use client";
+import { useEffect } from "react";
+import { fetchList } from "@/api/fetchList";
 
 export default function ListPage() {
   useEffect(() => {
-    const list = 
-  });
+    fetchList();
+  }, []);
   return <div>LIST</div>;
 }
