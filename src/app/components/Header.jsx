@@ -60,13 +60,13 @@ export default function Header() {
           {isAuthenticated && profile ? (
             <div className="relative">
               <img
-                src={profile.profileImage} 
+                src={profile.profileImage}
                 alt="Profile"
                 className="h-[2.3rem] w-[2.3rem] rounded-full shadow-sm object-cover cursor-pointer"
                 onClick={() => setDropdownOpen((prev) => !prev)}
               />
               {isDropdownOpen && (
-                <div className="absolute right-0 top-[2.8rem] space-y-[.4rem] shadow-lg rounded-md">
+                <div className="absolute right-0 top-[2.8rem] space-y-[.4rem] bg-transparent rounded-md">
                   <button
                     onClick={() => {
                       setDropdownOpen(false);
