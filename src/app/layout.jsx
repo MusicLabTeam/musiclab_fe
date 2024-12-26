@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Metadata } from "next";
 import { createContext, useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
 import { AuthProvider } from "./context/AuthContext";
 import { MusicProvider } from "./context/MusicContext";
@@ -57,6 +58,39 @@ export default function RootLayout({ children }) {
                     Cirque-Du-Trash
                   </a>
                 </footer>
+                <Toaster
+                  position="bottom-center"
+                  reverseOrder={false}
+                  toastOptions={{
+                    duration: 1000,
+                    success: {
+                      style: {
+                        marginBottom: "1rem",
+                        background:
+                          "linear-gradient(to right, rgba(57, 148, 255, 0.8), rgba(119, 171, 253, 0.8))",
+                        color: "white",
+                        borderRadius: "1rem",
+                        padding: ".5rem",
+                        paddingLeft: "1rem",
+                        boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
+                      },
+                      icon: "✔️",
+                    },
+                    error: {
+                      style: {
+                        marginBottom: "1rem",
+                        background:
+                          "linear-gradient(to right, rgba(229, 57, 53, 0.8), rgba(239, 83, 80, 0.8))",
+                        color: "white",
+                        borderRadius: "1rem",
+                        padding: ".5rem",
+                        paddingLeft: "1rem",
+                        boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
+                      },
+                      icon: "❌",
+                    },
+                  }}
+                />
               </body>
             </html>
           </ThemeContext.Provider>

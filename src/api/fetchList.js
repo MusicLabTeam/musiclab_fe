@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export async function fetchList() {
   try {
@@ -6,7 +7,6 @@ export async function fetchList() {
     const response = await axios.get("http://localhost:8000/api/mylist", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching list data:", error);
@@ -38,10 +38,15 @@ export async function addFavoriteSong(songType, songId) {
       }
     );
 
-    // console.log("Favorite song added:", response.data);
+    toast.success("Track added to your list");
     return response.data;
   } catch (error) {
-    console.error("Error adding favorite song:", error);
+    if (error.response && error.response.status === 400) {
+      toast.error("This track is already in the playlist");
+    } else {
+      console.error("Error adding favorite song:", error);
+      toast.error("An unexpected error occurred.");
+    }
     throw error;
   }
 }
@@ -55,6 +60,7 @@ export async function deleteFavoriteSong(favoriteId) {
         headers: { Authorization: `Bearer ${accessToken}` },
       }
     );
+    toast.success("Track deleted from your list");
     // console.log("Favorite song deleted:", response.data);
     return response.data;
   } catch (error) {

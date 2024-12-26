@@ -45,7 +45,6 @@ export default function MusicList() {
       await addFavoriteSong(selectedChart, song.id);
     } catch (error) {
       console.error("Error adding song to favorites:", error);
-      alert("Failed to add the song to your favorites.");
     }
   };
 
