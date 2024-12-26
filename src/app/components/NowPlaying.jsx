@@ -47,7 +47,7 @@ export default function NowPlaying() {
         throw new Error("Failed to fetch video URL");
       }
       const data = await response.json();
-      console.log("Received video data:", data);
+      // console.log("Received video data:", data);
       setVideoUrl(data.video_url);
     } catch (error) {
       console.error("Error fetching video URL:", error);

@@ -4,10 +4,11 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import RegionSelector from "./RegionSelector";
 import SearchBar from "./SearchBar";
-import { FaApple, FaPlay, FaSpotify } from "react-icons/fa";
+import { FaApple, FaHeart, FaPlay, FaSpotify } from "react-icons/fa";
 import { SiYoutubemusic } from "react-icons/si";
 import { useMusic } from "../context/MusicContext";
 import { fetchChartByType, fetchSearchChart } from "@/api/fetchChart";
+import { addFavoriteSong } from "@/api/fetchList";
 
 export default function MusicList() {
   const { selectedChart, selectedRegion, setNowPlaying } = useMusic();
@@ -38,10 +39,19 @@ export default function MusicList() {
     setNowPlaying(song);
   };
 
+  const handleFavoriteClick = async (song) => {
+    try {
+      await addFavoriteSong(selectedChart, song.id);
+    } catch (error) {
+      console.error("Error adding song to favorites:", error);
+      alert("Failed to add the song to your favorites.");
+    }
+  };
+
   const handleSearch = useCallback(
     async (query) => {
       if (!query) {
-        setSearchResults([]); //검색창 비어있으면 초기화
+        setSearchResults([]);
         return;
       }
 
@@ -108,14 +118,18 @@ export default function MusicList() {
           <h2 className="text-lg font-bold mt-6 ml-[1rem] mb-[.5rem]">
             {selectedChart} - {selectedRegion}
           </h2>
-          <ChartTable data={chartData} onSongClick={handleSongClick} />
+          <ChartTable
+            data={chartData}
+            onSongClick={handleSongClick}
+            onFavoriteClick={handleFavoriteClick}
+          />
         </div>
       )}
     </div>
   );
 }
 
-function ChartTable({ data, onSongClick }) {
+function ChartTable({ data, onSongClick, onFavoriteClick }) {
   return (
     <div className="mb-8 ml-2 overflow-x-auto">
       <table className="w-full text-left border-collapse table-auto">
@@ -167,6 +181,14 @@ function ChartTable({ data, onSongClick }) {
                   onClick={() => onSongClick(item)}
                 >
                   <FaPlay />
+                </button>
+              </td>
+              <td className="px-4 py-3 text-center">
+                <button
+                  className="hover:text-primary pl-1 text-[.75rem]"
+                  onClick={() => onFavoriteClick(item)}
+                >
+                  <FaHeart />
                 </button>
               </td>
             </tr>
