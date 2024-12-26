@@ -26,14 +26,18 @@ export default function Header() {
         {/* 로고 */}
         {theme === "dark" ? (
           <img
-            onClick={() => router.push("/")}
+            onClick={() => {
+              window.location.href = "/";
+            }}
             className="ml-[1rem] h-[2rem] cursor-pointer"
             src="dark_logo.png"
             alt="MusicLab"
           />
         ) : (
           <img
-            onClick={() => router.push("/")}
+            onClick={() => {
+              window.location.href = "/";
+            }}
             className="ml-[1rem] h-[2rem] cursor-pointer"
             src="light_logo.png"
             alt="MusicLab"
