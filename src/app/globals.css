@@ -32,3 +32,13 @@ body {
   background: #555;
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th,
+td {
+  text-align: left;
+  padding: 0.5rem;
+}

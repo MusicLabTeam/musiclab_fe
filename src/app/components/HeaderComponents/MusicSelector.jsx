@@ -12,7 +12,7 @@ export default function ChartSelector() {
         onClick={() => setSelectedChart("YouTube Music")}
         className={`flex items-center gap-[.5rem] px-[.6rem] py-[.35rem]  rounded-full cursor-pointer text-[.75rem] transition-all duration-300 ease-in-out transform ${
           selectedChart === "YouTube Music"
-            ? "bg-lightBackground/0 text-lightText dark:bg-darkBackground/60 dark:text-darkText "
+            ? "bg-lightBackground/60 text-lightText dark:bg-darkBackground/60 dark:text-darkText "
             : "bg-transparent text-lightText dark:text-darkText "
         }`}
       >

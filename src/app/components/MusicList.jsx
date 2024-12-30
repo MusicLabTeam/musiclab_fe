@@ -67,7 +67,6 @@ export default function MusicList() {
 
   return (
     <div>
-      {/* 검색창 */}
       <div className="flex mb-4 fixed z-50 h-[5rem] w-[calc(100vw-21rem)] pt-[1.3rem] bg-gradient-to-b from-lightBackground dark:from-darkBackground to-transparent">
         <div className="flex w-full justify-between">
           <div className="flex">
@@ -156,7 +155,7 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
                 <img
                   src={item.thumbnail_link}
                   alt="Cover"
-                  className="object-cover w-10 h-10 rounded"
+                  className="object-cover w-10 h-10 rounded max-w-none"
                 />
               </td>
               <td className="px-4 py-3 font-medium text-left">
