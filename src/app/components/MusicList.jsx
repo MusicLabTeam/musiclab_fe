@@ -135,13 +135,15 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
         <thead className="sticky top-0 z-10 ">
           <tr className="border-b-[.1rem] border-lightText/50 dark:border-darkText font-bold">
             <th className="w-[5%] px-4 py-3 text-center">#</th>
-            <th className="w-[10%] px-4 py-3 text-center"></th>
-            <th className="w-[40%] px-4 py-3 text-left">Title</th>
-            <th className="w-[25%] px-4 py-3 text-left pl-1">Artist</th>
+            <th className="w-[5%] px-4 py-3 text-center"></th>
+            <th className="w-[25%] px-4 py-3 text-left">Title</th>
+            <th className="w-[25%] px-4 py-3 text-left ">Artist</th>
             <th className="w-[15%] px-4 py-3 text-right">Streams</th>
-            <th className="w-[7%] px-4 py-3 text-center"></th>
+            <th className="w-[5%] px-4 py-3 text-right"></th>
+            <th className="w-[5%] px-4 py-3 text-center"></th>
           </tr>
         </thead>
+
         <tbody className="font-normal text-lightText/80 dark:text-darkText/80">
           {data.map((item, index) => (
             <tr
@@ -158,7 +160,7 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
                   className="object-cover w-10 h-10 rounded max-w-none"
                 />
               </td>
-              <td className="px-4 py-3 font-medium text-left">
+              <td className="px-4 py-3 font-medium text-left overflow-hidden text-ellipsis whitespace-nowrap max-w-[12rem]">
                 <Link
                   href={item.link || item.song_link}
                   className="hover:text-primary"
@@ -166,15 +168,16 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
                   {item.title}
                 </Link>
               </td>
-              <td className="px-4 py-3 pl-1 text-left">
+              <td className="px-4 py-3 text-left overflow-hidden text-ellipsis whitespace-nowrap max-w-[8rem]">
                 <Link href={item.artist_link} className="hover:text-primary">
                   {item.artist}
                 </Link>
               </td>
+
               <td className="px-4 py-3 text-right">
                 {item.streams || item.views || "."}
               </td>
-              <td className="px-4 py-3 text-center">
+              <td className="px-4 py-3 text-right">
                 <button
                   className="hover:text-primary pl-1 text-[.75rem]"
                   onClick={() => onSongClick(item)}
