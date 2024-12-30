@@ -109,7 +109,9 @@ function ChartTable({ data, onDelete }) {
                     <span className="flex items-center">
                       {renderLogo(item.song_type)}
                     </span>
-                    <span className="text-base">{item.title}</span>
+                    <span className="text-base text-ellipsis whitespace-nowrap max-w-[8rem]">
+                      {item.title}
+                    </span>
                   </div>
                 </Link>
               </td>
@@ -119,7 +121,9 @@ function ChartTable({ data, onDelete }) {
                   {item.artist}
                 </Link>
               </td> */}
-              <td className="px-4 py-3 text-left">{item.artist}</td>
+              <td className="px-4 py-3 text-left text-ellipsis whitespace-nowrap max-w-[8rem]">
+                {item.artist}
+              </td>
               <td className="px-4 py-3 text-right">
                 {item.streams || item.views || "."}
               </td>
