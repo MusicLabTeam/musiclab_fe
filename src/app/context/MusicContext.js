@@ -1,8 +1,6 @@
 import NowPlaying from "../components/NowPlaying";
 import React, { createContext, useContext, useState } from "react";
 
-// src/app/context/MusicContext.js
-
 export const MusicContext = createContext();
 
 export function MusicProvider({ children }) {

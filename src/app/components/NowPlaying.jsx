@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { IoIosPause, IoIosPlay } from "react-icons/io";
 import { RiTestTubeFill } from "react-icons/ri";
+import { useLanguage } from "../context/LanguageContext";
 import { useMusic } from "../context/MusicContext";
 
 export default function NowPlaying() {
@@ -47,7 +48,6 @@ export default function NowPlaying() {
         throw new Error("Failed to fetch video URL");
       }
       const data = await response.json();
-      // console.log("Received video data:", data);
       setVideoUrl(data.video_url);
     } catch (error) {
       console.error("Error fetching video URL:", error);
@@ -75,9 +75,29 @@ export default function NowPlaying() {
     }
   };
 
+  const { language } = useLanguage();
+  const translations = {
+    En: {
+      nowPlayingHeader: "Now Playing...",
+      noSongTitle: "No song is currently playing.",
+    },
+    Ko: {
+      nowPlayingHeader: "현재 재생 중...",
+      noSongTitle: "현재 재생 중인 노래가 없습니다.",
+    },
+    Ja: {
+      nowPlayingHeader: "再生中...",
+      noSongTitle: "現在演奏されている曲はありません",
+    },
+  };
+
+  const currentTexts = translations[language] || translations.En;
+
   return (
     <div className="h-[18rem] w-[12rem] mb-[1rem]">
-      <h2 className="text-[1.2rem] font-semibold mb-[1rem]">Now Playing...</h2>
+      <h2 className="text-[1.2rem] font-semibold mb-[1rem]">
+        {currentTexts.nowPlayingHeader}
+      </h2>
       {nowPlaying ? (
         <>
           <div className="mb-[1rem] flex items-center justify-between">
@@ -119,7 +139,7 @@ export default function NowPlaying() {
           <div className="mb-[1rem] flex items-center justify-between">
             <div>
               <h3 className="text-[.75rem] font-semibold">
-                No song is currently playing.
+                {currentTexts.noSongTitle}
               </h3>
               <p className="text-[.75rem] font-light">.</p>
             </div>

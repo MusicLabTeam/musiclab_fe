@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("En");
+  const { language, setLanguage } = useLanguage(); // Get language and setLanguage from context
 
   const languages = [
     { code: "En", label: "English" },
@@ -14,13 +15,11 @@ export default function LanguageSelector() {
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const handleLanguageChange = (code) => {
-    setSelectedLanguage(code);
+    setLanguage(code);
     setIsOpen(false);
   };
 
-  const currentLanguage = languages.find(
-    (lang) => lang.code === selectedLanguage
-  );
+  const currentLanguage = languages.find((lang) => lang.code === language);
 
   return (
     <div className="relative w-max">
@@ -39,15 +38,15 @@ export default function LanguageSelector() {
       </div>
 
       {isOpen && (
-        <div className="absolute top-[2.8rem] left-0 rounded-lg w-40">
+        <div className="absolute top-[2.8rem] left-0 rounded-lg w-40 shadow-md">
           <ul className="flex flex-col space-y-[.4rem] justify-center">
             {languages
-              .filter((lang) => lang.code !== selectedLanguage)
+              .filter((lang) => lang.code !== language)
               .map((lang) => (
                 <li
                   key={lang.code}
                   onClick={() => handleLanguageChange(lang.code)}
-                  className="flex shadow-sm items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
+                  className="flex shadow-sm items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer  transition-all"
                 >
                   {lang.label}
                 </li>

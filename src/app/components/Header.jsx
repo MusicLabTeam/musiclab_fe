@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import { MdAccountCircle, MdDarkMode, MdWbSunny } from "react-icons/md";
 import { useAuth } from "../context/AuthContext";
 import { ThemeContext } from "../layout";
+import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function Header() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -17,6 +18,24 @@ export default function Header() {
 
   const openLoginModal = () => setLoginModalOpen(true);
   const closeLoginModal = () => setLoginModalOpen(false);
+
+  const { language } = useLanguage();
+  const translations = {
+    En: {
+      profile: "Profile",
+      logout: "Sign out",
+    },
+    Ko: {
+      profile: "프로필",
+      logout: "로그아웃",
+    },
+    Ja: {
+      profile: "プロフィール",
+      logout: "ログアウト",
+    },
+  };
+
+  const buttonText = translations[language] || translations.En;
 
   return (
     <>
@@ -76,18 +95,18 @@ export default function Header() {
                       setDropdownOpen(false);
                       router.push("/profile");
                     }}
-                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
+                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[6.4rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
                   >
-                    Profile
+                    {buttonText.profile}
                   </button>
                   <button
                     onClick={() => {
                       logout();
                       router.push("/");
                     }}
-                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[5.5rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button !text-red-500 cursor-pointer"
+                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[6.4rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button !text-red-500 cursor-pointer"
                   >
-                    Sign out
+                    {buttonText.logout}
                   </button>
                 </div>
               )}

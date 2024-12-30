@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import { FaApple, FaPlay, FaSpotify } from "react-icons/fa";
 import { SiYoutubemusic } from "react-icons/si";
 import { TbPlaylistAdd } from "react-icons/tb";
+import { useLanguage } from "../context/LanguageContext";
 import { useMusic } from "../context/MusicContext";
 import { fetchChartByType, fetchSearchChart } from "@/api/fetchChart";
 import { addFavoriteSong } from "@/api/fetchList";
@@ -129,6 +130,27 @@ export default function MusicList() {
 }
 
 function ChartTable({ data, onSongClick, onFavoriteClick }) {
+  const { language } = useLanguage();
+  const translations = {
+    En: {
+      title: "Title",
+      artist: "Artist",
+      streams: "Streams",
+    },
+    Ko: {
+      title: "제목",
+      artist: "아티스트",
+      streams: "재생 수",
+    },
+    Ja: {
+      title: "タイトル",
+      artist: "アーティスト",
+      streams: "再生数",
+    },
+  };
+
+  const currentTexts = translations[language] || translations.En;
+
   return (
     <div className="mb-8 ml-2 overflow-x-auto">
       <table className="w-full text-left border-collapse table-auto">
@@ -136,9 +158,15 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
           <tr className="border-b-[.1rem] border-lightText/50 dark:border-darkText font-bold">
             <th className="w-[5%] px-4 py-3 text-center">#</th>
             <th className="w-[5%] px-4 py-3 text-center"></th>
-            <th className="w-[25%] px-4 py-3 text-left">Title</th>
-            <th className="w-[25%] px-4 py-3 text-left ">Artist</th>
-            <th className="w-[15%] px-4 py-3 text-right">Streams</th>
+            <th className="w-[25%] px-4 py-3 text-left">
+              {currentTexts.title}
+            </th>
+            <th className="w-[25%] px-4 py-3 text-left ">
+              {currentTexts.artist}
+            </th>
+            <th className="w-[15%] px-4 py-3 text-right">
+              {currentTexts.streams}
+            </th>
             <th className="w-[5%] px-4 py-3 text-right"></th>
             <th className="w-[5%] px-4 py-3 text-center"></th>
           </tr>
