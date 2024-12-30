@@ -158,7 +158,7 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
           <tr className="border-b-[.1rem] border-lightText/50 dark:border-darkText font-bold">
             <th className="w-[5%] px-4 py-3 text-center">#</th>
             <th className="w-[5%] px-4 py-3 text-center"></th>
-            <th className="w-[25%] px-4 py-3 text-left">
+            <th className="w-[35%] px-4 py-3 text-left">
               {currentTexts.title}
             </th>
             <th className="w-[25%] px-4 py-3 text-left ">
