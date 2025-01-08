@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlay, FaTrash } from "react-icons/fa";
 import { FaApple, FaSpotify } from "react-icons/fa";
 import { SiYoutubemusic } from "react-icons/si";
+import { useLanguage } from "../context/LanguageContext";
 import { fetchList } from "@/api/fetchList";
 import { deleteFavoriteSong } from "@/api/fetchList";
 
@@ -33,10 +34,19 @@ export default function ListPage() {
     }
   };
 
+  const { language } = useLanguage();
+  const translations = {
+    En: "Playlist",
+    Ko: "플레이리스트",
+    Ja: "プレイリスト",
+  };
+
+  const LikedMusic = translations[language] || translations.En;
+
   return (
     <div className="p-4">
-      <h2 className="text-lg font-bold mt-6 ml-[.5rem] flex items-center">
-        Liked Music
+      <h2 className="text-xl font-semibold mt-2  flex items-center">
+        {LikedMusic}
       </h2>
       <div>
         <ChartTable data={listData} onDelete={handleDelete} />
@@ -46,6 +56,14 @@ export default function ListPage() {
 }
 
 function ChartTable({ data, onDelete }) {
+  const { language } = useLanguage();
+  const translations = {
+    En: "No songs",
+    Ko: "아직 추가된 음원이 없습니다.",
+    Ja: "まだ追加された音楽はありません。",
+  };
+  const NoSong = translations[language] || translations.En;
+
   // const handleSongClick = (song) => {
   //   console.log("Now playing:", song);
   // };
@@ -53,7 +71,7 @@ function ChartTable({ data, onDelete }) {
   if (!data || data.length === 0) {
     return (
       <p className="text-gray-500 text-[1.1rem] w-full justify-center flex">
-        No songs
+        {NoSong}
       </p>
     );
   }
