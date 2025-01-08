@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useState } from "react";
 import RegionSelector from "./RegionSelector";
 import SearchBar from "./SearchBar";
+import toast from "react-hot-toast";
 import { FaApple, FaPlay, FaSpotify } from "react-icons/fa";
 import { SiYoutubemusic } from "react-icons/si";
 import { TbPlaylistAdd } from "react-icons/tb";
@@ -13,6 +14,7 @@ import { fetchChartByType, fetchSearchChart } from "@/api/fetchChart";
 import { addFavoriteSong } from "@/api/fetchList";
 
 export default function MusicList() {
+  const { language } = useLanguage();
   const { selectedChart, selectedRegion, setNowPlaying } = useMusic();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [chartData, setChartData] = useState([]);
@@ -42,6 +44,18 @@ export default function MusicList() {
   };
 
   const handleFavoriteClick = async (song) => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      toast.error(
+        language === "Ko"
+          ? "로그인 후 이용해 주세요."
+          : language === "Ja"
+          ? "ログインしてからご利用ください。"
+          : "Please log in to access."
+      );
+      return;
+    }
+
     try {
       await addFavoriteSong(selectedChart, song.id);
     } catch (error) {
