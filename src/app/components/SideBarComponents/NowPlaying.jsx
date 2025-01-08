@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { IoIosPause, IoIosPlay } from "react-icons/io";
 import { RiTestTubeFill } from "react-icons/ri";
-import { useLanguage } from "../context/LanguageContext";
-import { useMusic } from "../context/MusicContext";
+import { useLanguage } from "../../context/LanguageContext";
+import { useMusic } from "../../context/MusicContext";
 
 export default function NowPlaying() {
   const { nowPlaying } = useMusic();
@@ -44,13 +44,13 @@ export default function NowPlaying() {
         `http://localhost:8000/api/play-song/youtube/${nowPlaying.id}`
       );
       if (!response.ok) {
-        console.error("API Error:", await response.text());
+        // console.error("API Error:", await response.text());
         throw new Error("Failed to fetch video URL");
       }
       const data = await response.json();
       setVideoUrl(data.video_url);
     } catch (error) {
-      console.error("Error fetching video URL:", error);
+      // console.error("Error fetching video URL:", error);
     }
   };
 

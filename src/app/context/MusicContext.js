@@ -1,4 +1,4 @@
-import NowPlaying from "../components/NowPlaying";
+import NowPlaying from "../components/SideBarComponents/NowPlaying";
 import React, { createContext, useContext, useState } from "react";
 
 export const MusicContext = createContext();
