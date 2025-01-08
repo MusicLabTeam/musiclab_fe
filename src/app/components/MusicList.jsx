@@ -165,12 +165,46 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
 
   const currentTexts = translations[language] || translations.En;
 
+  const getRankChangeIcon = (current, previous) => {
+    if (previous === null || previous === undefined)
+      return <span className="text-gray-500 text-[.8rem] ml-1">-</span>;
+
+    const difference = previous - current;
+
+    if (difference > 0) {
+      return (
+        <span className="text-[.8rem] ml-1 flex items-center">
+          <span className="text-green-500 flex items-center justify-center mr-[.3rem]">
+            ▲
+          </span>
+          <span className="text-lightText dark:text-darkText">
+            {Math.abs(difference)}
+          </span>
+        </span>
+      );
+    } else if (difference < 0) {
+      return (
+        <span className="text-[.8rem] ml-1 flex items-center">
+          <span className="text-red-500 flex items-center justify-center mr-[.3rem]">
+            ▼
+          </span>
+          <span className="text-lightText dark:text-darkText">
+            {Math.abs(difference)}
+          </span>
+        </span>
+      );
+    } else {
+      return <span className="text-gray-500 text-[.8rem] ml-1">-</span>;
+    }
+  };
+
   return (
     <div className="mb-8 ml-2 overflow-x-auto">
       <table className="w-full text-left border-collapse table-auto">
         <thead className="sticky top-0 z-10 ">
           <tr className="border-b-[.1rem] border-lightText/50 dark:border-darkText font-bold">
             <th className="w-[5%] px-4 py-3 text-center">#</th>
+            <th className="w-[5%] px-4 py-3 text-center"></th>
             <th className="w-[5%] px-4 py-3 text-center"></th>
             <th className="w-[35%] px-4 py-3 text-left">
               {currentTexts.title}
@@ -192,8 +226,9 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
               key={index}
               className="transition-colors border-b cursor-pointer border-lightButton/50 dark:border-darkButton/50 hover:bg-lightButton/50 dark:hover:bg-darkButton/50"
             >
+              <td className="px-4 py-3 text-center">{item.current_position}</td>
               <td className="px-4 py-3 text-center">
-                {item.current_position || item.rank}
+                {getRankChangeIcon(item.current_position, item.previous_rank)}
               </td>
               <td className="px-4 py-3 text-center">
                 <img

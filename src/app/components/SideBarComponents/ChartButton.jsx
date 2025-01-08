@@ -24,7 +24,7 @@ export default function Chart() {
   return (
     <div
       onClick={handlePlaylistClick}
-      className="h-[2.3rem] px-[1rem] w-[13rem] flex items-center rounded-[0.5rem] hover:bg-darkButton"
+      className="h-[2.3rem] px-[1rem] w-[13rem] flex items-center rounded-[0.5rem] hover:bg-lightButton dark:hover:bg-darkButton"
     >
       <div className="flex items-center space-x-[.7rem] ">
         <FaChartLine className="text-[1.2rem]" />

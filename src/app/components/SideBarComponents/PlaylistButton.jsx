@@ -37,7 +37,7 @@ export default function Playlist() {
   return (
     <div
       onClick={handleLibraryClick}
-      className="h-[2.3rem] mt-3 px-[1rem] w-[13rem] flex items-center rounded-[0.5rem] hover:bg-darkButton"
+      className="h-[2.3rem] mt-3 px-[1rem] w-[13rem] flex items-center rounded-[0.5rem] hover:bg-lightButton dark:hover:bg-darkButton"
     >
       <div className="flex items-center text-[1rem] space-x-[.7rem] ">
         <PiPlaylistBold className="text-[1.2rem]" />
