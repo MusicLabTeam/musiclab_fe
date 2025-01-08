@@ -4,7 +4,7 @@ import { FaGithub, FaGoogle } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
 export default function LoginModal({ onClose, onLoginSuccess }) {
-  const googleLogin = useGoogleLogin({
+  const GoogleLogin = useGoogleLogin({
     flow: "auth-code",
     ux_mode: "popup",
     redirect_uri: "http://localhost:3000",
@@ -54,6 +54,59 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
     },
   });
 
+  const GithubLogin = async () => {
+    try {
+      const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+      const redirectUri = "http://localhost:3000";
+      const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user:email`;
+      const popup = window.open(
+        githubAuthUrl,
+        "_blank",
+        "width=500,height=700,scrollbars=yes"
+      );
+
+      const interval = setInterval(() => {
+        try {
+          const url = new URL(popup.location.href);
+          const code = url.searchParams.get("code");
+          console.log(code);
+          if (code) {
+            clearInterval(interval);
+            popup.close();
+
+            axios
+              .post("http://localhost:8000/api/auth/github", {
+                code: code,
+              })
+              .then((response) => {
+                if (response.status === 200) {
+                  const accessToken = response.data.access_token;
+                  const user = response.data.user;
+
+                  localStorage.setItem("access_token", accessToken);
+                  localStorage.setItem("profile_image", user.profile_image);
+                  localStorage.setItem("name", user.name);
+                  localStorage.setItem("email", user.email);
+
+                  onLoginSuccess(user);
+                  onClose();
+                }
+              })
+              .catch((error) => {
+                console.error("GitHub Login Error:", error.message);
+                alert("GitHub 로그인에 실패했습니다.");
+              });
+          }
+        } catch (error) {
+          //
+        }
+      }, 1000);
+    } catch (error) {
+      console.error("GitHub Login Error:", error.message);
+      alert("GitHub 로그인에 실패했습니다.");
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
       <div className="relative w-[25rem] flex flex-col items-center h-[20rem] p-[4rem] bg-lightBackground/70 dark:bg-darkBackground/90 rounded-xl shadow-lg">
@@ -81,7 +134,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
           <button
             type="button"
             onClick={() => {
-              googleLogin(), onClose();
+              GoogleLogin(), onClose();
             }}
             className="w-full py-[0.5rem] flex items-center justify-center gap-[0.5rem] bg-primary text-white rounded-md hover:bg-blue-600"
           >
@@ -91,6 +144,9 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
 
           <button
             type="button"
+            onClick={() => {
+              GithubLogin(), onClose();
+            }}
             className="w-full py-[0.5rem] flex items-center justify-center gap-[0.5rem] bg-gray-800 text-white rounded-md hover:bg-gray-900"
           >
             <FaGithub className="text-[1.2rem]" />
