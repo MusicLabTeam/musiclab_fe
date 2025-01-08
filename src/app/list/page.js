@@ -10,7 +10,7 @@ import { deleteFavoriteSong } from "@/api/fetchList";
 
 export default function ListPage() {
   const [listData, setListData] = useState([]);
-
+  const { language } = useLanguage();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +25,7 @@ export default function ListPage() {
 
   const handleDelete = async (favoriteId) => {
     try {
-      await deleteFavoriteSong(favoriteId);
+      await deleteFavoriteSong(favoriteId, language);
       setListData((prevData) =>
         prevData.filter((item) => item.favorite_id !== favoriteId)
       );
@@ -34,7 +34,6 @@ export default function ListPage() {
     }
   };
 
-  const { language } = useLanguage();
   const translations = {
     En: "Playlist",
     Ko: "플레이리스트",

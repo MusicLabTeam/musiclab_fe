@@ -27,9 +27,11 @@ export default function RootLayout({ children }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
-        <AuthProvider>
-          <LanguageProvider>
+      <LanguageProvider>
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+        >
+          <AuthProvider>
             <MusicProvider>
               <html lang="en" className={theme}>
                 <body className="flex flex-col min-h-screen bg-lightBackground text-lightText dark:bg-darkBackground dark:text-darkText">
@@ -70,7 +72,7 @@ export default function RootLayout({ children }) {
                         style: {
                           marginBottom: "1rem",
                           background:
-                            "linear-gradient(to right, rgb(57, 149, 255), rgb(119, 170, 253))",
+                            "linear-gradient(to right, rgb(69, 156, 255), rgb(119, 170, 253))",
                           color: "white",
                           borderRadius: "1rem",
                           padding: ".5rem",
@@ -83,7 +85,7 @@ export default function RootLayout({ children }) {
                         style: {
                           marginBottom: "1rem",
                           background:
-                            "linear-gradient(to right, rgb(201, 57, 54), rgb(209, 81, 79))",
+                            "linear-gradient(to right, rgb(217, 81, 79), rgb(223, 94, 92))",
                           color: "white",
                           borderRadius: "1rem",
                           padding: ".5rem",
@@ -97,9 +99,9 @@ export default function RootLayout({ children }) {
                 </body>
               </html>
             </MusicProvider>
-          </LanguageProvider>
-        </AuthProvider>
-      </GoogleOAuthProvider>
+          </AuthProvider>
+        </GoogleOAuthProvider>
+      </LanguageProvider>
     </ThemeContext.Provider>
   );
 }

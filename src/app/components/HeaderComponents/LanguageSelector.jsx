@@ -4,7 +4,7 @@ import { useLanguage } from "@/app/context/LanguageContext";
 
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
-  const { language, setLanguage } = useLanguage(); // Get language and setLanguage from context
+  const { language, setLanguage } = useLanguage();
 
   const languages = [
     { code: "En", label: "English" },
