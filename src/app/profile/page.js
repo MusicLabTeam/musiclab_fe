@@ -46,7 +46,7 @@ export default function ProfilePage() {
     <div className="flex flex-col items-center py-[8rem] min-h-screen">
       <h1 className="text-[2rem] font-bold mb-4">{Text.profile}</h1>
       <img
-        src={profile.profileImage}
+        src={profile.profile_image}
         alt="Profile"
         className="w-[8rem] h-[8rem] rounded-full mx-auto mb-[3rem] mt-[1rem] shadow-lg object-cover"
       />

@@ -30,7 +30,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
 
           if (userResponse.status === 200) {
             const { profile_image, name, email } = userResponse.data;
-            const user = { profileImage: profile_image, name, email };
+            const user = { profile_image, name, email };
 
             localStorage.setItem("profile_image", profile_image);
             localStorage.setItem("name", name);
@@ -109,7 +109,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[100]">
-      <div className="relative w-[25rem] flex flex-col items-center h-[20rem] p-[4rem] bg-lightBackground/70 dark:bg-darkBackground/90 rounded-xl shadow-lg">
+      <div className="relative w-[25rem] flex flex-col items-center h-[20rem] p-[4rem] bg-lightBackground/90 dark:bg-darkBackground/90 rounded-xl shadow-lg">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-2xl hover:text-primary"
