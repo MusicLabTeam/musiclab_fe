@@ -128,6 +128,7 @@ export default function Header() {
           onLoginSuccess={(user) => {
             login(user);
             setLoginModalOpen(false);
+            setDropdownOpen(false);
           }}
         />
       )}
