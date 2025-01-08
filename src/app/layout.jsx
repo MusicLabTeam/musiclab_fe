@@ -3,7 +3,6 @@ import "./globals.css";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { Metadata } from "next";
 import { createContext, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
@@ -12,12 +11,14 @@ import { LanguageProvider } from "./context/LanguageContext";
 import { MusicProvider } from "./context/MusicContext";
 
 export const ThemeContext = createContext();
-export const LanguageContext = createContext();
 export default function RootLayout({ children }) {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "dark" // 기본값 dark
+  );
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -25,11 +26,11 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
-      <AuthProvider>
-        <LanguageProvider>
-          <MusicProvider>
-            <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+        <AuthProvider>
+          <LanguageProvider>
+            <MusicProvider>
               <html lang="en" className={theme}>
                 <body className="flex flex-col min-h-screen bg-lightBackground text-lightText dark:bg-darkBackground dark:text-darkText">
                   <Header />
@@ -39,7 +40,7 @@ export default function RootLayout({ children }) {
                       {children}
                     </div>
                   </main>
-                  <footer className="fixed bottom-0 left-0 w-full h-[3rem] items-end bg-gradient-to-t from-white to-transparent pb-[0.3rem] dark:from-darkBackground dark:to-transparent shadow-md flex justify-center  font-light text-[0.8rem] text-lightText dark:text-darkText gap-2 z-30">
+                  <footer className="fixed bottom-0 left-0 w-full h-[3rem] items-end bg-gradient-to-t from-white to-transparent pb-[0.3rem] dark:from-darkBackground dark:to-transparent shadow-md flex justify-center font-light text-[0.8rem] text-lightText dark:text-darkText gap-2 z-30">
                     <span>© 2024 MusicLab. All Rights Reserved.</span>
                     <a
                       href="https://github.com/cxaosdev"
@@ -95,10 +96,10 @@ export default function RootLayout({ children }) {
                   />
                 </body>
               </html>
-            </ThemeContext.Provider>
-          </MusicProvider>
-        </LanguageProvider>
-      </AuthProvider>
-    </GoogleOAuthProvider>
+            </MusicProvider>
+          </LanguageProvider>
+        </AuthProvider>
+      </GoogleOAuthProvider>
+    </ThemeContext.Provider>
   );
 }
