@@ -95,7 +95,7 @@ export default function Header() {
                       setDropdownOpen(false);
                       router.push("/profile");
                     }}
-                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[6.4rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
+                    className="flex items-center gap-2 text-center justify-center w-[6.4rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button cursor-pointer"
                   >
                     {buttonText.profile}
                   </button>
@@ -104,7 +104,7 @@ export default function Header() {
                       logout();
                       router.push("/");
                     }}
-                    className="flex shadow-sm items-center gap-2 text-center justify-center w-[6.4rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button !text-red-500 cursor-pointer"
+                    className="flex  items-center gap-2 text-center justify-center w-[6.4rem] font-medium text-[.75rem] h-[2.3rem] px-4 py-2 rounded-full button !text-red-500 cursor-pointer"
                   >
                     {buttonText.logout}
                   </button>
