@@ -9,7 +9,7 @@ export default function Library() {
   const { language } = useLanguage();
 
   const translations = {
-    En: "Play List",
+    En: "Playlist",
     Ko: "플레이 리스트",
     Ja: "プレイリスト",
   };

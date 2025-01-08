@@ -65,7 +65,16 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
         </button>
 
         <div className="flex justify-center w-full mb-[1rem]">
-          <img className="w-[10rem]" src="dark_logo.png" alt="MusicLab" />
+          <img
+            className="w-[10rem] hidden dark:block"
+            src="dark_logo.png"
+            alt="MusicLab Dark Logo"
+          />
+          <img
+            className="w-[10rem] block dark:hidden"
+            src="light_logo.png"
+            alt="MusicLab Light Logo"
+          />
         </div>
 
         <div className="space-y-[1rem] w-full mt-[3rem]">
