@@ -252,7 +252,7 @@ function ChartTable({ data, onSongClick, onFavoriteClick }) {
               </td>
 
               <td className="px-4 py-3 text-right">
-                {item.streams || item.views || "."}
+                {item.streams || item.views || "N/A"}
               </td>
               <td className="px-4 py-3 text-right">
                 <button
